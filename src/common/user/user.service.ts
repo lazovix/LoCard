@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { User } from './user';
 import { UserTokenService } from './token/user-token.service';
+import { UserToken } from './token/user-token';
 
 @Injectable()
 export class UserService {
@@ -12,4 +13,13 @@ export class UserService {
   constructor(
     private readonly userTokenService: UserTokenService,
   ) {}
+
+  getUser(email: string, password: string): User {
+    return this.users.find(user => user.email === email && user.password === password);
+  }
+
+  getToken(): UserToken {
+    return this.userTokenService.generate();
+  }
+
 }
